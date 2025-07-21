@@ -1,70 +1,174 @@
-# Getting Started with Create React App
+# MeisterPlan Frontend – Dokumentation
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Übersicht
 
-## Available Scripts
+Dieses Projekt ist ein modernes React-Frontend mit Vite, TypeScript und Tailwind CSS. Es bietet eine modulare Struktur mit Routing, Layouts und einem konfigurierbaren Menüsystem.
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## Technologien
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **React** (mit Hooks und Komponenten)
+- **TypeScript**
+- **Vite** (Build-Tool)
+- **Tailwind CSS** (Styling)
+- **React Router** (Routing)
+- **ESLint & Prettier** (Code-Qualität)
+- **Lucide React** (Icons)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## Projektstruktur
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+frontend/
+│
+├── src/
+│   ├── components/
+│   │   └── ui/
+│   │       ├── Header/
+│   │       │   └── Header.tsx
+│   │       └── Menu/
+│   │           ├── Menu.tsx
+│   │           ├── MenuItem.tsx
+│   │           └── SubMenuItem.tsx
+│   ├── config/
+│   │   └── menuConfig.ts
+│   ├── layouts/
+│   │   └── DashboardLayout.tsx
+│   ├── pages/
+│   │   └── Home.tsx
+│   ├── router/
+│   │   └── index.tsx
+│   ├── styles/
+│   │   └── global.css
+│   └── main.tsx
+├── index.html
+├── package.json
+├── tailwind.config.ts
+└── ...
+```
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Installation & Start
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. **Abhängigkeiten installieren:**
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+   ```sh
+   npm install
+   ```
 
-### `npm run eject`
+2. **Entwicklungsserver starten:**
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+   ```sh
+   npm run dev
+   ```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+3. **Build für Produktion:**
+   ```sh
+   npm run build
+   ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+---
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Routing
 
-## Learn More
+- Die Routen werden in `src/router/index.tsx` definiert.
+- Die Hauptkomponente `App.tsx` rendert den Router.
+- Beispielroute:
+  ```tsx
+  <Route path="/" element={<Home />} />
+  ```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+---
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Layouts
 
-### Code Splitting
+- Das Hauptlayout ist `DashboardLayout.tsx`.
+- Es bindet den Header und das Menü ein und rendert die Seiteninhalte im `<main>`-Bereich.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+---
 
-### Analyzing the Bundle Size
+## Menü-Konfiguration
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- Die Menüstruktur wird zentral in `src/config/menuConfig.ts` gepflegt.
+- Beispiel:
+  ```typescript
+  export const menuItemsConfig = [
+    { id: '1', label: 'Dashboard', path: '/', icon: Home },
+    // ...
+  ];
+  ```
+- Icons werden aus `lucide-react` importiert und als Komponente gespeichert.
 
-### Making a Progressive Web App
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Menü-Komponenten
 
-### Advanced Configuration
+- **Menu.tsx:** Rendert das Hauptmenü und verwaltet den aktiven Zustand sowie Dropdowns.
+- **MenuItem.tsx:** Einzelner Menüpunkt, unterstützt Icons, Aktiv-Zustand und Dropdowns.
+- **SubMenuItem.tsx:** Für Untermenüpunkte.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+**Wichtig:**  
+Icons werden als JSX-Element gerendert:
 
-### Deployment
+```tsx
+icon={item.icon ? React.createElement(item.icon) : undefined}
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+---
 
-### `npm run build` fails to minify
+## Styling
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Tailwind CSS ist vollständig integriert.
+- Globale Styles in `src/styles/global.css`:
+  ```css
+  @tailwind base;
+  @tailwind components;
+  @tailwind utilities;
+  ```
+- Die Tailwind-Konfiguration steht in `tailwind.config.ts`.
+
+---
+
+## Typen & Props
+
+- Menü-Konfiguration (`MenuItemConfig`) ist typisiert.
+- Komponenten wie `MenuItem` und `SubMenuItem` erwarten klar definierte Props.
+
+---
+
+## Erweiterung
+
+- Neue Menüpunkte einfach in `menuConfig.ts` ergänzen.
+- Neue Seiten unter `src/pages/` anlegen und im Router einbinden.
+- Zusätzliche Layouts oder UI-Komponenten können modular ergänzt werden.
+
+---
+
+## Fehlerbehebung
+
+- **Tailwind-Styling wird nicht übernommen:**  
+  → Entwicklungsserver neu starten (`npm run dev`).  
+  → Prüfen, ob die CSS-Datei geladen wird.
+- **Icon-Fehler:**  
+  → Icons immer als JSX-Element (`<Icon />` oder `React.createElement(Icon)`) übergeben.
+- **Router-Fehler:**  
+  → Nur einen `<BrowserRouter>` im gesamten Baum verwenden.
+
+---
+
+## Weiterführende Links
+
+- [React Dokumentation](https://react.dev/)
+- [Vite Dokumentation](https://vitejs.dev/)
+- [Tailwind CSS Dokumentation](https://tailwindcss.com/)
+- [Lucide Icons](https://lucide.dev/)
+
+---
+
+**Kontakt & Support:**  
+Für Fragen oder Erweiterungen bitte an das Entwicklerteam wenden.
+
+---

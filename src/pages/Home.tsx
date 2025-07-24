@@ -1,11 +1,11 @@
-import DashboardLayout from "../layouts/DashboardLayout";
+import DashboardLayout from '../layouts/DashboardLayout';
 
 const Home = () => {
   return (
-    <DashboardLayout>
-      <h2 className="text-2xl font-semibold">Willkommen im Dashboard</h2>
-      <p>Dies ist deine Startseite.</p>
-    </DashboardLayout>
+    <div>
+      <h1>Home Page</h1>
+      <p>Welcome to the home page content.</p>
+    </div>
   );
 };
 

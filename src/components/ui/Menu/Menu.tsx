@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import MenuItem from './MenuItem';
 import SubMenuItem from './SubMenuItem';
 //import { menuItemsConfig, type MenuItemConfig } from "../../config/menuConfig"
@@ -12,6 +13,7 @@ export default function Menu() {
   const [activeItem, setActiveItem] = useState<string>('1');
   const [openDropdowns, setOpenDropdowns] = useState<Set<string>>(new Set());
   const menuRef = React.useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
 
   const toggleDropdown = (itemId: string) => {
     const newOpenDropdowns = new Set<string>();
@@ -27,6 +29,7 @@ export default function Menu() {
     setActiveItem(itemId);
     // Close all dropdowns when selecting a main item
     setOpenDropdowns(new Set());
+    navigate(menuItemsConfig.find((item) => item.id === itemId)?.path || '/');
   };
 
   const handleSubItemClick = (subItemId: string, parentId: string) => {
@@ -35,6 +38,11 @@ export default function Menu() {
     const newOpenDropdowns = new Set(openDropdowns);
     newOpenDropdowns.delete(parentId);
     setOpenDropdowns(newOpenDropdowns);
+    navigate(
+      menuItemsConfig
+        .find((item) => item.id === parentId)
+        ?.children?.find((child) => child.id === subItemId)?.path || '/'
+    );
   };
 
   const isItemActive = (itemId: string, children?: MenuItemConfig[]) => {
@@ -44,13 +52,8 @@ export default function Menu() {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      console.log('ref:', menuRef.current);
-      console.log('clicked target:', event.target);
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        console.log('Closing all dropdowns');
         setOpenDropdowns(new Set());
-      } else {
-        console.log('Clicked inside the menu, not closing dropdowns');
       }
     };
 

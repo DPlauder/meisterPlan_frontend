@@ -74,8 +74,8 @@ frontend/
 
 ## Routing
 
-- Die Routen werden in `src/router/index.tsx` definiert.
-- Die Hauptkomponente `App.tsx` rendert den Router.
+- Die Routen werden in `src/router/AppRouter.tsx` definiert.
+- Die Hauptkomponente `App.tsx` rendert den AppRouter.
 - Beispielroute:
   ```tsx
   <Route path="/" element={<Home />} />

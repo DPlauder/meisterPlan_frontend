@@ -20,34 +20,34 @@ Dieses Projekt ist ein modernes React-Frontend mit Vite, TypeScript und Tailwind
 
 ## Projektstruktur
 
-```
 frontend/
 │
 ├── src/
-│   ├── components/
-│   │   └── ui/
-│   │       ├── Header/
-│   │       │   └── Header.tsx
-│   │       └── Menu/
-│   │           ├── Menu.tsx
-│   │           ├── MenuItem.tsx
-│   │           └── SubMenuItem.tsx
-│   ├── config/
-│   │   └── menuConfig.ts
-│   ├── layouts/
-│   │   └── DashboardLayout.tsx
-│   ├── pages/
-│   │   └── Home.tsx
-│   ├── router/
-│   │   └── index.tsx
-│   ├── styles/
-│   │   └── global.css
-│   └── main.tsx
+│ ├── components/
+│ │ └── ui/
+│ │ ├── Header/
+│ │ │ └── Header.tsx
+│ │ └── Menu/
+│ │ ├── Menu.tsx
+│ │ ├── MenuItem.tsx
+│ │ └── SubMenuItem.tsx
+│ ├── config/
+│ │ └── menuConfig.ts
+│ ├── layouts/
+│ │ └── DashboardLayout.tsx
+│ ├── pages/
+│ │ └── Home.tsx
+│ ├── router/
+│ │ └── index.tsx
+│ ├── styles/
+│ │ └── global.css
+│ └── main.tsx
 ├── index.html
 ├── package.json
 ├── tailwind.config.ts
 └── ...
-```
+
+````
 
 ---
 
@@ -57,7 +57,7 @@ frontend/
 
    ```sh
    npm install
-   ```
+````
 
 2. **Entwicklungsserver starten:**
 

@@ -1,52 +1,67 @@
-import React from "react"
-import { useState } from "react"
-import MenuItem from "./MenuItem"
-import SubMenuItem from "./SubMenuItem"
+import React, { useEffect } from 'react';
+import { useState } from 'react';
+import MenuItem from './MenuItem';
+import SubMenuItem from './SubMenuItem';
 //import { menuItemsConfig, type MenuItemConfig } from "../../config/menuConfig"
-import { menuItemsConfig, type MenuItemConfig } from "../../../config/menuConfig"
+import {
+  menuItemsConfig,
+  type MenuItemConfig,
+} from '../../../config/menuConfig';
 
 export default function Menu() {
-  const [activeItem, setActiveItem] = useState<string>("1")
-  const [openDropdowns, setOpenDropdowns] = useState<Set<string>>(new Set())
+  const [activeItem, setActiveItem] = useState<string>('1');
+  const [openDropdowns, setOpenDropdowns] = useState<Set<string>>(new Set());
+  const menuRef = React.useRef<HTMLDivElement>(null);
 
   const toggleDropdown = (itemId: string) => {
-    const newOpenDropdowns = new Set<string>()
+    const newOpenDropdowns = new Set<string>();
 
     // Wenn das aktuelle Item bereits offen ist, schließe es
-    if (openDropdowns.has(itemId)) {
-      // Alle Dropdowns schließen (Set bleibt leer)
-    } else {
-      // Nur das neue Item öffnen, alle anderen schließen
-      newOpenDropdowns.add(itemId)
+    if (!openDropdowns.has(itemId)) {
+      newOpenDropdowns.add(itemId);
     }
-
-    setOpenDropdowns(newOpenDropdowns)
-  }
+    setOpenDropdowns(newOpenDropdowns);
+  };
 
   const handleItemClick = (itemId: string) => {
-    setActiveItem(itemId)
+    setActiveItem(itemId);
     // Close all dropdowns when selecting a main item
-    setOpenDropdowns(new Set())
-  }
+    setOpenDropdowns(new Set());
+  };
 
   const handleSubItemClick = (subItemId: string, parentId: string) => {
-    setActiveItem(subItemId)
+    setActiveItem(subItemId);
     // Close the dropdown when selecting a sub item
-    const newOpenDropdowns = new Set(openDropdowns)
-    newOpenDropdowns.delete(parentId)
-    setOpenDropdowns(newOpenDropdowns)
-  }
+    const newOpenDropdowns = new Set(openDropdowns);
+    newOpenDropdowns.delete(parentId);
+    setOpenDropdowns(newOpenDropdowns);
+  };
 
   const isItemActive = (itemId: string, children?: MenuItemConfig[]) => {
-    if (activeItem === itemId) return true
-    if (children) {
-      return children.some((child) => child.id === activeItem)
-    }
-    return false
-  }
+    if (activeItem === itemId) return true;
+    return children?.some((child) => child.id === activeItem) ?? false;
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      console.log('ref:', menuRef.current);
+      console.log('clicked target:', event.target);
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        console.log('Closing all dropdowns');
+        setOpenDropdowns(new Set());
+      } else {
+        console.log('Clicked inside the menu, not closing dropdowns');
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [menuRef]);
 
   return (
-    <nav className="flex items-center space-x-1">
+    <nav ref={menuRef} className="flex items-center space-x-1">
       {menuItemsConfig.map((item: MenuItemConfig) => (
         <MenuItem
           key={item.id}
@@ -69,5 +84,5 @@ export default function Menu() {
         </MenuItem>
       ))}
     </nav>
-  )
+  );
 }

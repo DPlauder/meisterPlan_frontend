@@ -22,30 +22,74 @@ Dieses Projekt ist ein modernes React-Frontend mit Vite, TypeScript und Tailwind
 
 frontend/
 │
-├── src/
-│ ├── components/
-│ │ └── ui/
-│ │ ├── Header/
-│ │ │ └── Header.tsx
-│ │ └── Menu/
-│ │ ├── Menu.tsx
-│ │ ├── MenuItem.tsx
-│ │ └── SubMenuItem.tsx
-│ ├── config/
-│ │ └── menuConfig.ts
-│ ├── layouts/
-│ │ └── DashboardLayout.tsx
-│ ├── pages/
-│ │ └── Home.tsx
-│ ├── router/
-│ │ └── index.tsx
-│ ├── styles/
-│ │ └── global.css
-│ └── main.tsx
 ├── index.html
 ├── package.json
 ├── tailwind.config.ts
-└── ...
+├── README.md
+│
+├── src/
+│ ├── App.tsx
+│ ├── main.tsx
+│ │
+│ ├── assets/
+│ │
+│ ├── components/
+│ │ └── ui/
+│ │ ├── Button/
+│ │ ├── Header/
+│ │ │ ├── Header.tsx
+│ │ │ └── Header.styles.ts
+│ │ └── Menu/
+│ │ ├── Menu.tsx
+│ │ ├── MenuItem.tsx
+│ │ ├── SubMenuItem.tsx
+│ │ └── Menu.styles.ts
+│ │
+│ ├── config/
+│ │ └── menuConfig.ts
+│ │
+│ ├── features/
+│ │ ├── auth/
+│ │ ├── invoices/
+│ │ ├── products/
+│ │ └── users/
+│ │
+│ ├── hooks/
+│ │
+│ ├── layouts/
+│ │ └── DashboardLayout.tsx
+│ │
+│ ├── lib/
+│ │ └── fetchClient.ts
+│ │
+│ ├── pages/
+│ │ ├── Home.tsx
+│ │ ├── Reports.tsx
+│ │ ├── Settings.tsx
+│ │ ├── customers/
+│ │ │ ├── CustomersList.tsx
+│ │ │ └── CustomersNew.tsx
+│ │ ├── orders/
+│ │ │ ├── Invoices.tsx
+│ │ │ └── Orders.tsx
+│ │ └── products/
+│ │ ├── Inventory.tsx
+│ │ └── ProductsList.tsx
+│ │
+│ ├── router/
+│ │ └── AppRouter.tsx
+│ │
+│ ├── services/
+│ │ └── authService.ts
+│ │
+│ ├── store/
+│ │
+│ ├── styles/
+│ │ └── global.css
+│ │
+│ ├── types/
+│ │
+│ └── utils/
 
 ````
 
@@ -165,6 +209,14 @@ icon={item.icon ? React.createElement(item.icon) : undefined}
 - [Vite Dokumentation](https://vitejs.dev/)
 - [Tailwind CSS Dokumentation](https://tailwindcss.com/)
 - [Lucide Icons](https://lucide.dev/)
+
+---
+
+## Pflege & Mitwirken
+
+- Änderungen an der Menüstruktur immer in `menuConfig.ts` vornehmen.
+- Neue Komponenten und Seiten nach dem bestehenden Muster anlegen.
+- Pull Requests und Issues sind willkommen!
 
 ---
 

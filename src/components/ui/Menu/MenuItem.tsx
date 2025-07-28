@@ -1,15 +1,15 @@
-import type React from "react"
-import { ChevronDown } from "lucide-react"
+import type React from 'react';
+import { ChevronDown } from 'lucide-react';
 
 interface MenuItemProps {
-  label: string
-  icon?: React.ReactNode
-  active?: boolean
-  hasChildren?: boolean
-  isOpen?: boolean
-  onClick?: () => void
-  onToggle?: () => void
-  children?: React.ReactNode
+  label: string;
+  icon?: React.ReactNode;
+  active?: boolean;
+  hasChildren?: boolean;
+  isOpen?: boolean;
+  onClick?: () => void;
+  onToggle?: () => void;
+  children?: React.ReactNode;
 }
 
 const MenuItem: React.FC<MenuItemProps> = ({
@@ -27,29 +27,29 @@ const MenuItem: React.FC<MenuItemProps> = ({
       <button
         onClick={hasChildren ? onToggle : onClick}
         className={`
-          group relative flex items-center gap-2 px-4 py-2.5 rounded-xl font-medium text-sm
-          transition-all duration-200 ease-in-out
-          ${
-            active
-              ? "bg-gradient-to-r from-blue-500/20 to-purple-500/20 text-blue-300 shadow-lg shadow-blue-500/10 border border-blue-500/20"
-              : "text-slate-300 hover:text-white hover:bg-slate-700/50 hover:shadow-md"
-          }
-        `}
+    group relative flex items-center gap-2 px-4 py-2.5 rounded-xl font-medium text-sm
+    transition-all duration-200 ease-in-out
+    border
+    shadow
+    ${
+      active
+        ? 'bg-gradient-to-r from-blue-500/20 to-purple-500/20 text-blue-300 shadow-lg shadow-blue-500/10 border-blue-500/20'
+        : 'text-slate-300 hover:text-white hover:bg-slate-700/50 hover:shadow-md border-transparent'
+    }
+  `}
       >
         {icon && (
-          <span className={`transition-transform duration-200 ${active ? "scale-110" : "group-hover:scale-105"}`}>
+          <span
+            className={`transition-transform duration-200 ${active ? 'scale-110' : 'group-hover:scale-105'}`}
+          >
             {icon}
           </span>
         )}
-        <span className="hidden sm:inline-block">{label}</span>
-
+        {label}
         {hasChildren && (
-          <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} />
-        )}
-
-        {/* Active indicator */}
-        {active && (
-          <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full" />
+          <ChevronDown
+            className={`ml-2 h-4 w-4 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+          />
         )}
       </button>
 
@@ -60,7 +60,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default MenuItem
+export default MenuItem;

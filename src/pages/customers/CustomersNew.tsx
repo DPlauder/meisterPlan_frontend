@@ -1,8 +1,9 @@
+import React from 'react';
+import NewBusinessCustomerForm from '../../components/businessCustomers/BusinessCustomerForm';
 const CustomersNew = () => {
   return (
     <div>
-      <h1>New Customer</h1>
-      <p>This is the new customer page.</p>
+      <NewBusinessCustomerForm />
     </div>
   );
 };

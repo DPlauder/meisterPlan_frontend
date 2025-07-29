@@ -201,9 +201,9 @@ export default function CustomerList({
                 </td>
                 <td className="px-6 py-4">
                   <div className="text-sm text-gray-900">{customer.email}</div>
-                  {customer.phine && (
+                  {customer.phone && (
                     <div className="text-sm text-gray-500">
-                      {customer.phine}
+                      {customer.phone}
                     </div>
                   )}
                 </td>

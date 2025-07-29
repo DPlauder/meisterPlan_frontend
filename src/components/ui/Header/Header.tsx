@@ -1,4 +1,4 @@
-import Menu from "../Menu/Menu"
+import Menu from '../Menu/Menu';
 
 export default function Header() {
   return (
@@ -14,8 +14,13 @@ export default function Header() {
             </h1>
           </div>
           <Menu />
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 bg-slate-600 rounded-full flex items-center justify-center">
+              <span className="text-white text-sm">U</span>
+            </div>
+          </div>
         </div>
       </div>
     </header>
-  )
+  );
 }

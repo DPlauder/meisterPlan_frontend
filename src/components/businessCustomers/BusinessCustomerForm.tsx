@@ -18,8 +18,8 @@ import { createBusinessCustomer } from '../../services/businessCustomers/busines
 interface FormData {
   name: string;
   email: string;
-  phine: string;
-  adress: string;
+  phone: string;
+  address: string;
   city: string;
   postalCode: string;
   country: string;
@@ -43,8 +43,8 @@ export default function NewBusinessCustomerForm() {
   const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
-    phine: '',
-    adress: '',
+    phone: '',
+    address: '',
     city: '',
     postalCode: '',
     country: '',
@@ -74,15 +74,15 @@ export default function NewBusinessCustomerForm() {
     if (!formData.email.trim()) {
       newErrors.email = 'E-Mail ist erforderlich';
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Ungültige E-Mail-Adresse';
+      newErrors.email = 'Ungültige E-Mail-addresse';
     }
     if (!formData.city.trim()) {
       newErrors.city = 'Stadt ist erforderlich';
     }
 
     // Optional validation for phone
-    if (formData.phine && !/^[\d\s\-+()]+$/.test(formData.phine)) {
-      newErrors.phine = 'Ungültige Telefonnummer';
+    if (formData.phone && !/^[\d\s\-+()]+$/.test(formData.phone)) {
+      newErrors.phone = 'Ungültige Telefonnummer';
     }
 
     // Optional validation for postal code
@@ -107,8 +107,8 @@ export default function NewBusinessCustomerForm() {
       const newCustomer = await createBusinessCustomer({
         name: formData.name,
         email: formData.email,
-        phine: formData.phine || undefined,
-        adress: formData.adress || undefined,
+        phone: formData.phone || undefined,
+        address: formData.address || undefined,
         city: formData.city,
         postalCode: formData.postalCode || undefined,
         country: formData.country || undefined,
@@ -135,8 +135,8 @@ export default function NewBusinessCustomerForm() {
     setFormData({
       name: '',
       email: '',
-      phine: '',
-      adress: '',
+      phone: '',
+      address: '',
       city: '',
       postalCode: '',
       country: '',
@@ -229,7 +229,7 @@ export default function NewBusinessCustomerForm() {
               className="flex items-center gap-2 text-sm font-medium text-gray-700"
             >
               <Mail className="w-4 h-4" />
-              E-Mail-Adresse *
+              E-Mail-addresse *
             </label>
             <input
               id="email"
@@ -252,43 +252,43 @@ export default function NewBusinessCustomerForm() {
           {/* Phone - Optional */}
           <div className="space-y-2">
             <label
-              htmlFor="phine"
+              htmlFor="phone"
               className="flex items-center gap-2 text-sm font-medium text-gray-700"
             >
               <Phone className="w-4 h-4" />
               Telefonnummer
             </label>
             <input
-              id="phine"
+              id="phone"
               type="tel"
-              value={formData.phine}
-              onChange={(e) => handleInputChange('phine', e.target.value)}
+              value={formData.phone}
+              onChange={(e) => handleInputChange('phone', e.target.value)}
               placeholder="+49 123 456789"
               className={`
                 w-full px-3 py-2 border rounded-lg shadow-sm
                 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500
                 transition-colors duration-200
-                ${errors.phine ? 'border-red-500 bg-red-50' : 'border-gray-300 bg-white hover:border-gray-400'}
+                ${errors.phone ? 'border-red-500 bg-red-50' : 'border-gray-300 bg-white hover:border-gray-400'}
               `}
             />
-            {errors.phine && (
-              <p className="text-sm text-red-500">{errors.phine}</p>
+            {errors.phone && (
+              <p className="text-sm text-red-500">{errors.phone}</p>
             )}
           </div>
 
           {/* Address - Optional */}
           <div className="space-y-2">
             <label
-              htmlFor="adress"
+              htmlFor="address"
               className="flex items-center gap-2 text-sm font-medium text-gray-700"
             >
               <MapPin className="w-4 h-4" />
-              Adresse
+              addresse
             </label>
             <textarea
-              id="adress"
-              value={formData.adress}
-              onChange={(e) => handleInputChange('adress', e.target.value)}
+              id="address"
+              value={formData.address}
+              onChange={(e) => handleInputChange('address', e.target.value)}
               placeholder="Musterstraße 123"
               rows={2}
               className="

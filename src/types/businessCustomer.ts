@@ -2,8 +2,8 @@ export type businessCustomer = {
   id: string;
   name: string;
   email: string;
-  phine?: string;
-  adress?: string;
+  phone?: string;
+  address?: string;
   city: string;
   postalCode?: string;
   country?: string;

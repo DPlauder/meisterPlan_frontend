@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useCustomerDelete } from '../../hooks/businessCustomers/useBusinessCustomerDelete';
 import {
   deleteBusinessCustomer,
   fetchCustomers,
@@ -11,7 +12,19 @@ export default function CustomersList() {
   const [customers, setCustomers] = useState<businessCustomer[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [confirmId, setConfirmId] = useState<string | null>(null); // ID des Kunden, der gelöscht werden soll
+
+  // Hook to handle customer deletion
+  // It provides methods to request, confirm, and cancel deletion
+  const { confirmId, requestDelete, cancelDelete, confirmDelete } =
+    useCustomerDelete(
+      (id) => {
+        setCustomers((prev) => prev.filter((c) => c.id !== id));
+      },
+      (err) => {
+        console.error('Fehler beim Löschen:', err);
+        setError('Löschen fehlgeschlagen');
+      }
+    );
 
   useEffect(() => {
     fetchCustomers()
@@ -25,19 +38,6 @@ export default function CustomersList() {
       });
   }, []);
 
-  const handleConfirmDelete = async () => {
-    if (!confirmId) return;
-    try {
-      await deleteBusinessCustomer(confirmId);
-      setCustomers((prev) => prev.filter((c) => c.id !== confirmId));
-    } catch (err) {
-      console.error('Fehler beim Löschen:', err);
-      setError('Löschen fehlgeschlagen');
-    } finally {
-      setConfirmId(null); // Dialog schließen
-    }
-  };
-
   if (loading) return <p className="p-4 text-gray-600">Lade Kunden...</p>;
   if (error) return <p className="p-4 text-red-600">Fehler: {error}</p>;
 
@@ -47,14 +47,14 @@ export default function CustomersList() {
         customers={customers}
         onAddCustomer={() => console.log('Neuer Kunde hinzufügen')}
         onEditCustomer={(customer) => console.log('Bearbeiten:', customer)}
-        onDeleteCustomer={(id) => setConfirmId(id)} // Statt direkt löschen → ID merken
+        onDeleteCustomer={requestDelete}
       />
 
       {confirmId && (
         <ConfirmDialog
           message="Möchtest du diesen Kunden wirklich löschen?"
-          onCancel={() => setConfirmId(null)}
-          onConfirm={handleConfirmDelete}
+          onCancel={cancelDelete}
+          onConfirm={confirmDelete}
         />
       )}
     </>

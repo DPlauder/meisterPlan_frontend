@@ -1,8 +1,8 @@
-# MeisterPlan Frontend – Dokumentation
+# MeisterPlan Frontend
 
 ## Übersicht
 
-Dieses Projekt ist ein modernes React-Frontend mit Vite, TypeScript und Tailwind CSS. Es bietet eine modulare Struktur mit Routing, Layouts und einem konfigurierbaren Menüsystem.
+Dieses Projekt ist ein modernes React-Frontend für MeisterPlan. Es nutzt Vite, TypeScript, Tailwind CSS und eine modulare Komponentenstruktur. Das Menü ist zentral konfigurierbar, das Routing flexibel und die UI ist auf Erweiterbarkeit ausgelegt. Die Anwendung kommuniziert mit mehreren Backend-Mikroservices über REST-APIs.
 
 ---
 
@@ -13,13 +13,14 @@ Dieses Projekt ist ein modernes React-Frontend mit Vite, TypeScript und Tailwind
 - **Vite** (Build-Tool)
 - **Tailwind CSS** (Styling)
 - **React Router** (Routing)
-- **ESLint & Prettier** (Code-Qualität)
 - **Lucide React** (Icons)
+- **ESLint & Prettier** (Code-Qualität)
 
 ---
 
 ## Projektstruktur
 
+```
 frontend/
 │
 ├── index.html
@@ -28,70 +29,80 @@ frontend/
 ├── README.md
 │
 ├── src/
-│ ├── App.tsx
-│ ├── main.tsx
-│ │
-│ ├── assets/
-│ │
-│ ├── components/
-│ │ └── ui/
-│ │ ├── Button/
-│ │ ├── Header/
-│ │ │ ├── Header.tsx
-│ │ │ └── Header.styles.ts
-│ │ └── Menu/
-│ │ ├── Menu.tsx
-│ │ ├── MenuItem.tsx
-│ │ ├── SubMenuItem.tsx
-│ │ └── Menu.styles.ts
-│ │
-│ ├── config/
-│ │ └── menuConfig.ts
-│ │
-│ ├── features/
-│ │ ├── auth/
-│ │ ├── invoices/
-│ │ ├── products/
-│ │ └── users/
-│ │
-│ ├── hooks/
-│ │
-│ ├── layouts/
-│ │ └── DashboardLayout.tsx
-│ │
-│ ├── lib/
-│ │ └── fetchClient.ts
-│ │
-│ ├── pages/
-│ │ ├── Home.tsx
-│ │ ├── Reports.tsx
-│ │ ├── Settings.tsx
-│ │ ├── customers/
-│ │ │ ├── CustomersList.tsx
-│ │ │ └── CustomersNew.tsx
-│ │ ├── orders/
-│ │ │ ├── Invoices.tsx
-│ │ │ └── Orders.tsx
-│ │ └── products/
-│ │ ├── Inventory.tsx
-│ │ └── ProductsList.tsx
-│ │
-│ ├── router/
-│ │ └── AppRouter.tsx
-│ │
-│ ├── services/
-│ │ └── authService.ts
-│ │
-│ ├── store/
-│ │
-│ ├── styles/
-│ │ └── global.css
-│ │
-│ ├── types/
-│ │
-│ └── utils/
-
-````
+│   ├── App.tsx
+│   ├── main.tsx
+│   │
+│   ├── assets/
+│   │
+│   ├── components/
+│   │   ├── businessCustomers/
+│   │   │   ├── BusinessCustomerForm.tsx
+│   │   │   └── BusinessCustomerList.tsx
+│   │   └── ui/
+│   │       ├── Button/
+│   │       │   └── button.tsx
+│   │       ├── Header/
+│   │       │   ├── Header.tsx
+│   │       │   └── Header.styles.ts
+│   │       └── Menu/
+│   │           ├── Menu.tsx
+│   │           ├── MenuItem.tsx
+│   │           ├── SubMenuItem.tsx
+│   │           └── Menu.styles.ts
+│   │       └── ConfirmDialog.tsx
+│   │
+│   ├── config/
+│   │   ├── apiConfig.ts
+│   │   └── menuConfig.ts
+│   │
+│   ├── features/
+│   │   ├── auth/
+│   │   ├── invoices/
+│   │   ├── products/
+│   │   └── users/
+│   │
+│   ├── hooks/
+│   │   └── businessCustomers/
+│   │       └── useBusinessCustomerDelete.ts
+│   │
+│   ├── layouts/
+│   │   └── DashboardLayout.tsx
+│   │
+│   ├── lib/
+│   │   └── fetchClient.ts
+│   │
+│   ├── pages/
+│   │   ├── Home.tsx
+│   │   ├── Reports.tsx
+│   │   ├── Settings.tsx
+│   │   ├── customers/
+│   │   │   ├── CustomersList.tsx
+│   │   │   └── CustomersNew.tsx
+│   │   ├── orders/
+│   │   │   ├── Orders.tsx
+│   │   │   └── Invoices.tsx
+│   │   └── products/
+│   │       ├── ProductsList.tsx
+│   │       └── Inventory.tsx
+│   │
+│   ├── router/
+│   │   └── AppRouter.tsx
+│   │
+│   ├── services/
+│   │   ├── authService.ts
+│   │   └── businessCustomers/
+│   │       └── businessCustomerService.ts
+│   │
+│   ├── store/
+│   │
+│   ├── styles/
+│   │   └── global.css
+│   │
+│   ├── types/
+│   │   └── businessCustomer.ts
+│   │
+│   └── utils/
+```
 
 ---
 
@@ -101,7 +112,7 @@ frontend/
 
    ```sh
    npm install
-````
+   ```
 
 2. **Entwicklungsserver starten:**
 
@@ -127,16 +138,10 @@ frontend/
 
 ---
 
-## Layouts
-
-- Das Hauptlayout ist `DashboardLayout.tsx`.
-- Es bindet den Header und das Menü ein und rendert die Seiteninhalte im `<main>`-Bereich.
-
----
-
 ## Menü-Konfiguration
 
 - Die Menüstruktur wird zentral in `src/config/menuConfig.ts` gepflegt.
+- Icons werden aus `lucide-react` importiert und als Komponente gespeichert.
 - Beispiel:
   ```typescript
   export const menuItemsConfig = [
@@ -144,22 +149,76 @@ frontend/
     // ...
   ];
   ```
-- Icons werden aus `lucide-react` importiert und als Komponente gespeichert.
 
 ---
 
-## Menü-Komponenten
+## Komponenten
 
 - **Menu.tsx:** Rendert das Hauptmenü und verwaltet den aktiven Zustand sowie Dropdowns.
 - **MenuItem.tsx:** Einzelner Menüpunkt, unterstützt Icons, Aktiv-Zustand und Dropdowns.
 - **SubMenuItem.tsx:** Für Untermenüpunkte.
+- **Header.tsx:** Zeigt den App-Header mit Logo und User-Icon.
+- **BusinessCustomerList.tsx:** Listet Geschäftskunden auf.
+- **BusinessCustomerForm.tsx:** Formular zum Anlegen neuer Kunden.
+- **ConfirmDialog.tsx:** Bestätigungsdialog für Aktionen wie Löschen.
 
-**Wichtig:**  
-Icons werden als JSX-Element gerendert:
+---
 
-```tsx
-icon={item.icon ? React.createElement(item.icon) : undefined}
+## Services & Mikroservices
+
+Dieses Frontend kommuniziert mit mehreren Backend-Mikroservices über REST-APIs.  
+Die Service-Logik ist im Ordner `src/services/` gekapselt.
+
+### Beispiele für Services
+
+- **authService.ts**  
+  Authentifizierung (Login, Token-Handling etc.):
+
+  ```ts
+  export async function login(payload: LoginPayload): Promise<LoginResponse> {
+    return apiFetch('/auth/login', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    });
+  }
+  ```
+
+- **businessCustomers/businessCustomerService.ts**  
+  CRUD-Operationen für Geschäftskunden:
+  - `fetchCustomers()`: Holt alle Kunden
+  - `fetchBusinessCustomerById(id)`: Holt einen Kunden per ID
+  - `createBusinessCustomer(data)`: Legt einen neuen Kunden an
+  - `updateBusinessCustomer(id, data)`: Aktualisiert einen Kunden
+  - `deleteBusinessCustomer(id)`: Löscht einen Kunden
+
+  Beispiel:
+
+  ```ts
+  export async function fetchCustomers(): Promise<businessCustomer[]> {
+    return apiFetch(`${BUSINESS_CUSTOMER_API}/business-customers`, {
+      method: 'GET',
+    });
+  }
+  ```
+
+Die Endpunkte werden zentral in `src/config/apiConfig.ts` verwaltet, z.B.:
+
+```ts
+export const API_ENDPOINTS = {
+  customers: 'http://localhost:3001/api',
+  // ...
+};
 ```
+
+Alle Service-Funktionen nutzen einen gemeinsamen `apiFetch`-Wrapper (`src/lib/fetchClient.ts`), um Fehlerbehandlung und Authentifizierung zu vereinheitlichen.
+
+---
+
+## Hinweise zu Mikroservices
+
+- Jeder Service ist für einen eigenen Bereich zuständig (z.B. Kunden, Authentifizierung, Produkte).
+- Die Kommunikation erfolgt ausschließlich über HTTP(S)-APIs.
+- Die Service-Implementierungen im Frontend sind lose gekoppelt und können leicht erweitert oder ausgetauscht werden.
 
 ---
 
@@ -176,10 +235,10 @@ icon={item.icon ? React.createElement(item.icon) : undefined}
 
 ---
 
-## Typen & Props
+## Typisierung
 
-- Menü-Konfiguration (`MenuItemConfig`) ist typisiert.
-- Komponenten wie `MenuItem` und `SubMenuItem` erwarten klar definierte Props.
+- Menü-Konfiguration (`MenuItemConfig`) und weitere Datenstrukturen sind mit TypeScript typisiert.
+- Komponenten erwarten klar definierte Props.
 
 ---
 
@@ -188,6 +247,7 @@ icon={item.icon ? React.createElement(item.icon) : undefined}
 - Neue Menüpunkte einfach in `menuConfig.ts` ergänzen.
 - Neue Seiten unter `src/pages/` anlegen und im Router einbinden.
 - Zusätzliche Layouts oder UI-Komponenten können modular ergänzt werden.
+- Neue Services im Ordner `src/services/` anlegen und in `apiConfig.ts` konfigurieren.
 
 ---
 
@@ -209,14 +269,6 @@ icon={item.icon ? React.createElement(item.icon) : undefined}
 - [Vite Dokumentation](https://vitejs.dev/)
 - [Tailwind CSS Dokumentation](https://tailwindcss.com/)
 - [Lucide Icons](https://lucide.dev/)
-
----
-
-## Pflege & Mitwirken
-
-- Änderungen an der Menüstruktur immer in `menuConfig.ts` vornehmen.
-- Neue Komponenten und Seiten nach dem bestehenden Muster anlegen.
-- Pull Requests und Issues sind willkommen!
 
 ---
 

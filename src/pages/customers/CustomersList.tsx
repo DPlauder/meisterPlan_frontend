@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useCustomerDelete } from '../../hooks/businessCustomers/useBusinessCustomerDelete';
+import { useBusinessCustomerDelete } from '../../hooks/businessCustomers/useBusinessCustomerDelete';
 import {
   deleteBusinessCustomer,
   fetchCustomers,
@@ -16,7 +16,7 @@ export default function CustomersList() {
   // Hook to handle customer deletion
   // It provides methods to request, confirm, and cancel deletion
   const { confirmId, requestDelete, cancelDelete, confirmDelete } =
-    useCustomerDelete(
+    useBusinessCustomerDelete(
       (id) => {
         setCustomers((prev) => prev.filter((c) => c.id !== id));
       },

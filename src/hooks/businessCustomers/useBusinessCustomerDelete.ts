@@ -2,9 +2,8 @@
 import { useState } from 'react';
 
 import { deleteBusinessCustomer } from '../../services/businessCustomers/businessCustomerService';
-import type { businessCustomer } from '../../types/businessCustomer';
 
-export function useCustomerDelete(
+export function useBusinessCustomerDelete(
   onDeleted: (id: string) => void,
   onError?: (error: Error) => void
 ) {

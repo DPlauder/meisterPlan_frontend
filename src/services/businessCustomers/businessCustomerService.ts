@@ -1,5 +1,5 @@
 import { API_ENDPOINTS } from '../../config/apiConfig';
-import { apiFetch } from '../../lib/fetchClient';
+import { apiFetch, apiDelete } from '../../lib/fetchClient';
 import { businessCustomer } from '../../types/businessCustomer';
 
 const BUSINESS_CUSTOMER_API = API_ENDPOINTS.customers;
@@ -57,14 +57,21 @@ export async function updateBusinessCustomer(
   return result;
 }
 export async function deleteBusinessCustomer(id: string): Promise<void> {
-  const response = await fetch(
-    `${BUSINESS_CUSTOMER_API}/business-customers/${id}`,
-    {
-      method: 'DELETE',
-    }
-  );
+  try {
+    const success = await apiDelete(
+      `${BUSINESS_CUSTOMER_API}/business-customers/${id}`
+    );
 
-  if (!response.ok) {
-    throw new Error('Kunde konnte nicht gelöscht werden.');
+    console.log('Delete Response from Gateway:', success);
+
+    // apiDelete gibt boolean zurück basierend auf response.ok oder response content
+    if (!success) {
+      throw new Error('Kunde konnte nicht gelöscht werden');
+    }
+
+    console.log('Customer successfully deleted');
+  } catch (error) {
+    console.error('Delete error:', error);
+    throw error;
   }
 }

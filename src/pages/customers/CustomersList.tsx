@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useBusinessCustomerDelete } from '../../hooks/businessCustomers/useBusinessCustomerDelete';
 import {
   deleteBusinessCustomer,
@@ -9,6 +10,7 @@ import BusinessCustomerList from '../../components/businessCustomers/BusinessCus
 import ConfirmDialog from '../../components/ui/ConfirmDialog';
 
 export default function CustomersList() {
+  const navigate = useNavigate();
   const [customers, setCustomers] = useState<businessCustomer[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -45,7 +47,7 @@ export default function CustomersList() {
     <>
       <BusinessCustomerList
         customers={customers}
-        onAddCustomer={() => console.log('Neuer Kunde hinzufügen')}
+        onAddCustomer={() => navigate('/customers/new')}
         onEditCustomer={(customer) => console.log('Bearbeiten:', customer)}
         onDeleteCustomer={requestDelete}
       />

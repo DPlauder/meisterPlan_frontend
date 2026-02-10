@@ -30,10 +30,7 @@ export const menuItemsConfig: MenuItemConfig[] = [
     label: 'Kunden',
     path: '/customers',
     icon: Users,
-    children: [
-      { id: '2-1', label: 'Alle Kunden', path: '/customers/all' },
-      { id: '2-2', label: 'Neuen Kunden anlegen', path: '/customers/new' },
-    ],
+    children: [{ id: '2-1', label: 'Alle Kunden', path: '/customers/all' }],
   },
   {
     id: '3',

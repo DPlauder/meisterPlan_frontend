@@ -117,12 +117,6 @@ export default function NewBusinessCustomerForm() {
 
       console.log('Neuer Kunde erstellt:', newCustomer);
       setSubmitSuccess(true);
-
-      // Reset form
-      setTimeout(() => {
-        handleReset();
-        setSubmitSuccess(false);
-      }, 2000);
     } catch (error) {
       console.error(error);
       // Optionale Fehleranzeige im UI
@@ -165,7 +159,10 @@ export default function NewBusinessCustomerForm() {
           </p>
 
           <button
-            onClick={() => setSubmitSuccess(false)}
+            onClick={() => {
+              handleReset();
+              setSubmitSuccess(false);
+            }}
             className="
               inline-flex items-center justify-center gap-2 px-8 py-4 text-lg font-medium text-white
               bg-gradient-to-r from-green-600 to-green-700 rounded-xl shadow-lg shadow-green-500/25

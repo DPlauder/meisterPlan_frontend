@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useProductDelete } from '../../hooks/products/useProductDelete';
 import { fetchProducts } from '../../services/products/productsService';
 import type { product } from '../../types/product';
@@ -6,6 +7,7 @@ import ProductsListComponent from '../../components/products/ProductsList';
 import ConfirmDialog from '../../components/ui/ConfirmDialog';
 
 export default function ProductsListPage() {
+  const navigate = useNavigate();
   const [products, setProducts] = useState<product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -42,7 +44,7 @@ export default function ProductsListPage() {
     <>
       <ProductsListComponent
         products={products}
-        onAddProduct={() => console.log('Neues Produkt hinzufügen')}
+        onAddProduct={() => navigate('/products/new')}
         onEditProduct={(product) => console.log('Bearbeiten:', product)}
         onDeleteProduct={requestDelete}
       />

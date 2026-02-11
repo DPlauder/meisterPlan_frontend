@@ -4,6 +4,7 @@ import Home from '../pages/Home';
 import CustomersList from '../pages/customers/CustomersList';
 import CustomersNew from '../pages/customers/CustomersNew';
 import ProductList from '../pages/products/ProductsList';
+import ProductsNew from '../pages/products/ProductsNew';
 import Inventory from '../pages/products/Inventory';
 import Orders from '../pages/orders/Orders';
 import Invoices from '../pages/orders/Invoices';
@@ -17,6 +18,7 @@ const AppRouter = () => (
       <Route path="customers/all" element={<CustomersList />} />
       <Route path="customers/new" element={<CustomersNew />} />
       <Route path="products/list" element={<ProductList />} />
+      <Route path="products/new" element={<ProductsNew />} />
       <Route path="products/inventory" element={<Inventory />} />
       <Route path="orders/list" element={<Orders />} />
       <Route path="invoices" element={<Invoices />} />

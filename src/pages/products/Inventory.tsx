@@ -82,13 +82,23 @@ export default function Inventory() {
             );
           }
         }}
-        onEditItem={(inv) => console.log('Bearbeiten:', inv)}
-        onDeleteItem={requestDelete}
       />
 
       <ProductDetailModal
         productData={selectedProduct}
         inventoryData={selectedItem}
+        onEdit={() => {
+          if (selectedItem) {
+            console.log('Bearbeiten:', selectedItem);
+          }
+        }}
+        onDelete={() => {
+          if (selectedItem) {
+            requestDelete(selectedItem.articleNumber);
+            setSelectedItem(null);
+            setSelectedProduct(null);
+          }
+        }}
         onClose={() => {
           setSelectedItem(null);
           setSelectedProduct(null);

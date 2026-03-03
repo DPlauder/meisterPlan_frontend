@@ -8,6 +8,7 @@ import {
   Hash,
   Calendar,
   Globe,
+  Edit,
   Trash2,
 } from 'lucide-react';
 import type { businessCustomer } from '../../types/businessCustomer';
@@ -16,12 +17,14 @@ import { useState } from 'react';
 interface CustomerDetailModalProps {
   customer: businessCustomer | null;
   onClose: () => void;
+  onEditCustomer?: (customer: businessCustomer) => void;
   onDeleteCustomer?: (customerId: string) => void;
 }
 
 export default function CustomerDetailModal({
   customer,
   onClose,
+  onEditCustomer,
   onDeleteCustomer,
 }: CustomerDetailModalProps) {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
@@ -216,15 +219,26 @@ export default function CustomerDetailModal({
           </div>
         ) : (
           <div className="sticky bottom-0 px-6 py-4 border-t border-gray-200 bg-gray-50 rounded-b-2xl flex justify-between items-center">
-            {onDeleteCustomer && (
-              <button
-                onClick={() => setShowDeleteConfirm(true)}
-                className="inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-lg shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 transition-colors duration-200"
-              >
-                <Trash2 className="w-4 h-4" />
-                Löschen
-              </button>
-            )}
+            <div className="flex items-center gap-3">
+              {onEditCustomer && (
+                <button
+                  onClick={() => onEditCustomer(customer)}
+                  className="inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-200"
+                >
+                  <Edit className="w-4 h-4" />
+                  Bearbeiten
+                </button>
+              )}
+              {onDeleteCustomer && (
+                <button
+                  onClick={() => setShowDeleteConfirm(true)}
+                  className="inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-lg shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 transition-colors duration-200"
+                >
+                  <Trash2 className="w-4 h-4" />
+                  Löschen
+                </button>
+              )}
+            </div>
             <button
               onClick={onClose}
               className="inline-flex items-center justify-center px-6 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-200"

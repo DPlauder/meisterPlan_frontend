@@ -4,8 +4,6 @@ import React, { useMemo, useState } from 'react';
 import {
   Search,
   Package,
-  Edit,
-  Trash2,
   Euro,
   Calendar,
   Hash,
@@ -189,9 +187,6 @@ export default function ProductsList({
                   <SortIcon field="createdAt" />
                 </button>
               </th>
-              <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Aktionen
-              </th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
@@ -235,32 +230,6 @@ export default function ProductsList({
                     {product.createdAt
                       ? formatDate(product.createdAt)
                       : formatDate(new Date().toISOString())}
-                  </div>
-                </td>
-                <td className="px-6 py-4 text-right">
-                  <div className="flex justify-end gap-2">
-                    {onEditProduct && (
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onEditProduct(product);
-                        }}
-                        title="Bearbeiten"
-                      >
-                        <Edit className="w-4 h-4 text-gray-400 hover:text-blue-600" />
-                      </button>
-                    )}
-                    {onDeleteProduct && (
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onDeleteProduct(product.id);
-                        }}
-                        title="Löschen"
-                      >
-                        <Trash2 className="w-4 h-4 text-gray-400 hover:text-red-600" />
-                      </button>
-                    )}
                   </div>
                 </td>
               </tr>

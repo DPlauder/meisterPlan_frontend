@@ -4,17 +4,10 @@ import React, { useMemo, useState } from 'react';
 import {
   Search,
   Users,
-  Edit,
-  Trash2,
-  Mail,
-  Phone,
-  MapPin,
-  Calendar,
   Hash,
   ChevronUp,
   ChevronDown,
   Plus,
-  Eye,
 } from 'lucide-react';
 import type { businessCustomer } from '../../types/businessCustomer';
 import CustomerDetailModal from './CustomerDetailModal';
@@ -182,9 +175,6 @@ export default function CustomerList({
                     <SortIcon field="createdAt" />
                   </button>
                 </th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Aktionen
-                </th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
@@ -227,30 +217,6 @@ export default function CustomerList({
                     <div className="text-sm text-gray-500">
                       {formatDate(
                         customer.createdAt || new Date().toISOString()
-                      )}
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 text-right">
-                    <div className="flex justify-end gap-2">
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setSelectedCustomer(customer);
-                        }}
-                        title="Details anzeigen"
-                      >
-                        <Eye className="w-4 h-4 text-gray-400 hover:text-green-600" />
-                      </button>
-                      {onEditCustomer && (
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            onEditCustomer(customer);
-                          }}
-                          title="Bearbeiten"
-                        >
-                          <Edit className="w-4 h-4 text-gray-400 hover:text-blue-600" />
-                        </button>
                       )}
                     </div>
                   </td>
@@ -312,6 +278,7 @@ export default function CustomerList({
       <CustomerDetailModal
         customer={selectedCustomer}
         onClose={() => setSelectedCustomer(null)}
+        onEditCustomer={onEditCustomer}
         onDeleteCustomer={onDeleteCustomer}
       />
     </>

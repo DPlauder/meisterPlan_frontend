@@ -4,8 +4,6 @@ import React, { useMemo, useState } from 'react';
 import {
   Search,
   Package,
-  Edit,
-  Trash2,
   Hash,
   MapPin,
   Box,
@@ -176,9 +174,6 @@ export default function InventoryList({
                   <SortIcon field="location" />
                 </button>
               </th>
-              <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Aktionen
-              </th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
@@ -214,32 +209,6 @@ export default function InventoryList({
                   <div className="flex items-center gap-1 text-xs text-gray-500 mt-1">
                     <MapPin className="w-3 h-3" />
                     Lagerplatz
-                  </div>
-                </td>
-                <td className="px-6 py-4 text-right">
-                  <div className="flex justify-end gap-2">
-                    {onEditItem && (
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onEditItem(inv);
-                        }}
-                        title="Bearbeiten"
-                      >
-                        <Edit className="w-4 h-4 text-gray-400 hover:text-blue-600" />
-                      </button>
-                    )}
-                    {onDeleteItem && (
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onDeleteItem(inv.articleNumber);
-                        }}
-                        title="Löschen"
-                      >
-                        <Trash2 className="w-4 h-4 text-gray-400 hover:text-red-600" />
-                      </button>
-                    )}
                   </div>
                 </td>
               </tr>

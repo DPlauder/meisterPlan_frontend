@@ -4,7 +4,6 @@ import React, { useMemo, useState } from 'react';
 import {
   Search,
   Package,
-  Eye,
   Edit,
   Trash2,
   Euro,
@@ -199,7 +198,8 @@ export default function ProductsList({
             {paginatedProducts.map((product) => (
               <tr
                 key={product.id}
-                className="hover:bg-gray-50 transition-colors duration-150"
+                className="hover:bg-blue-50 transition-colors duration-150 cursor-pointer"
+                onClick={() => onViewProduct?.(product)}
               >
                 <td className="px-6 py-4">
                   <div className="text-sm font-medium text-gray-900">
@@ -207,7 +207,7 @@ export default function ProductsList({
                   </div>
                   <div className="flex items-center gap-1 text-xs text-gray-500 mt-1">
                     <Hash className="w-3 h-3" />
-                    ID: {product.id}
+                    Artikelnummer: {product.articleNum}
                   </div>
                 </td>
                 <td className="px-6 py-4">
@@ -239,17 +239,12 @@ export default function ProductsList({
                 </td>
                 <td className="px-6 py-4 text-right">
                   <div className="flex justify-end gap-2">
-                    {onViewProduct && (
-                      <button
-                        onClick={() => onViewProduct(product)}
-                        title="Details"
-                      >
-                        <Eye className="w-4 h-4 text-gray-400 hover:text-gray-700" />
-                      </button>
-                    )}
                     {onEditProduct && (
                       <button
-                        onClick={() => onEditProduct(product)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onEditProduct(product);
+                        }}
                         title="Bearbeiten"
                       >
                         <Edit className="w-4 h-4 text-gray-400 hover:text-blue-600" />
@@ -257,7 +252,10 @@ export default function ProductsList({
                     )}
                     {onDeleteProduct && (
                       <button
-                        onClick={() => onDeleteProduct(product.id)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onDeleteProduct(product.id);
+                        }}
                         title="Löschen"
                       >
                         <Trash2 className="w-4 h-4 text-gray-400 hover:text-red-600" />

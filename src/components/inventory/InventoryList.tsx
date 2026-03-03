@@ -4,7 +4,6 @@ import React, { useMemo, useState } from 'react';
 import {
   Search,
   Package,
-  Eye,
   Edit,
   Trash2,
   Hash,
@@ -186,7 +185,8 @@ export default function InventoryList({
             {paginatedItems.map((inv) => (
               <tr
                 key={inv.articleNumber}
-                className="hover:bg-gray-50 transition-colors duration-150"
+                className="hover:bg-blue-50 transition-colors duration-150 cursor-pointer"
+                onClick={() => onViewItem?.(inv)}
               >
                 <td className="px-6 py-4">
                   <div className="text-sm font-medium text-gray-900">
@@ -218,14 +218,12 @@ export default function InventoryList({
                 </td>
                 <td className="px-6 py-4 text-right">
                   <div className="flex justify-end gap-2">
-                    {onViewItem && (
-                      <button onClick={() => onViewItem(inv)} title="Details">
-                        <Eye className="w-4 h-4 text-gray-400 hover:text-gray-700" />
-                      </button>
-                    )}
                     {onEditItem && (
                       <button
-                        onClick={() => onEditItem(inv)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onEditItem(inv);
+                        }}
                         title="Bearbeiten"
                       >
                         <Edit className="w-4 h-4 text-gray-400 hover:text-blue-600" />
@@ -233,7 +231,10 @@ export default function InventoryList({
                     )}
                     {onDeleteItem && (
                       <button
-                        onClick={() => onDeleteItem(inv.articleNumber)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onDeleteItem(inv.articleNumber);
+                        }}
                         title="Löschen"
                       >
                         <Trash2 className="w-4 h-4 text-gray-400 hover:text-red-600" />

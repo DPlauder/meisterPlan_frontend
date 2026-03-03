@@ -4,6 +4,7 @@ import React, { useMemo, useState } from 'react';
 import {
   Search,
   Package,
+  Eye,
   Edit,
   Trash2,
   Hash,
@@ -20,6 +21,7 @@ type SortDirection = 'asc' | 'desc';
 
 interface InventoryListProps {
   items: item[];
+  onViewItem?: (item: item) => void;
   onEditItem?: (item: item) => void;
   onDeleteItem?: (articleNumber: string) => void;
   onAddItem?: () => void;
@@ -27,6 +29,7 @@ interface InventoryListProps {
 
 export default function InventoryList({
   items,
+  onViewItem,
   onEditItem,
   onDeleteItem,
   onAddItem,
@@ -215,6 +218,11 @@ export default function InventoryList({
                 </td>
                 <td className="px-6 py-4 text-right">
                   <div className="flex justify-end gap-2">
+                    {onViewItem && (
+                      <button onClick={() => onViewItem(inv)} title="Details">
+                        <Eye className="w-4 h-4 text-gray-400 hover:text-gray-700" />
+                      </button>
+                    )}
                     {onEditItem && (
                       <button
                         onClick={() => onEditItem(inv)}

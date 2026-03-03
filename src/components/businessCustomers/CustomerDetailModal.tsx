@@ -195,7 +195,8 @@ export default function CustomerDetailModal({
         {showDeleteConfirm ? (
           <div className="sticky bottom-0 px-6 py-4 border-t border-gray-200 bg-red-50 rounded-b-2xl space-y-3">
             <p className="text-sm font-medium text-red-900">
-              Möchtest du diesen Kunden wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.
+              Möchtest du diesen Kunden wirklich löschen? Diese Aktion kann
+              nicht rückgängig gemacht werden.
             </p>
             <div className="flex justify-end gap-3">
               <button

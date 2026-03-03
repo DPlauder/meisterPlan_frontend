@@ -16,6 +16,26 @@ export async function fetchProductById(id: string): Promise<product> {
   });
 }
 
+export async function fetchProductByArticleNum(
+  articleNum: string
+): Promise<product> {
+  const products = await fetchProducts();
+  const normalizedArticleNum = articleNum.trim().toLowerCase();
+
+  const matchedProduct =
+    products.find((productItem) => productItem.articleNum === articleNum) ||
+    products.find(
+      (productItem) =>
+        productItem.articleNum.trim().toLowerCase() === normalizedArticleNum
+    );
+
+  if (!matchedProduct) {
+    throw new Error('Kein Produkt zur Artikelnummer gefunden');
+  }
+
+  return matchedProduct;
+}
+
 export async function createProduct(
   data: Omit<product, 'id' | 'createdAt'>
 ): Promise<product> {

@@ -2,15 +2,27 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useProductDelete } from '../../hooks/products/useProductDelete';
 import { fetchProducts } from '../../services/products/productsService';
+import {
+  fetchInventoryItemByArticleNumber,
+  fetchInventoryItems,
+} from '../../services/inventory/inventoryService';
 import type { product } from '../../types/product';
+import type { item } from '../../types/item';
 import ProductsListComponent from '../../components/products/ProductsList';
+import ProductDetailModal from '../../components/products/ProductDetailModal';
 import ConfirmDialog from '../../components/ui/ConfirmDialog';
 
 export default function ProductsListPage() {
   const navigate = useNavigate();
   const [products, setProducts] = useState<product[]>([]);
+  const [inventoryItems, setInventoryItems] = useState<item[]>([]);
+  const [selectedProduct, setSelectedProduct] = useState<product | null>(null);
+  const [selectedInventoryItem, setSelectedInventoryItem] =
+    useState<item | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const normalizeArticleNumber = (value: string) => value.trim().toLowerCase();
 
   // Hook to handle product deletion
   // It provides methods to request, confirm, and cancel deletion
@@ -26,9 +38,10 @@ export default function ProductsListPage() {
     );
 
   useEffect(() => {
-    fetchProducts()
-      .then((data) => {
-        setProducts(data);
+    Promise.all([fetchProducts(), fetchInventoryItems()])
+      .then(([productsData, inventoryData]) => {
+        setProducts(productsData);
+        setInventoryItems(inventoryData);
         setLoading(false);
       })
       .catch((err) => {
@@ -45,8 +58,55 @@ export default function ProductsListPage() {
       <ProductsListComponent
         products={products}
         onAddProduct={() => navigate('/products/new')}
+        onViewProduct={async (product) => {
+          try {
+            let linkedInventoryItem: item | null = null;
+
+            try {
+              linkedInventoryItem = await fetchInventoryItemByArticleNumber(
+                product.articleNum
+              );
+            } catch {
+              linkedInventoryItem = null;
+            }
+
+            if (!linkedInventoryItem) {
+              const latestInventoryItems = await fetchInventoryItems();
+              setInventoryItems(latestInventoryItems);
+
+              linkedInventoryItem =
+                latestInventoryItems.find(
+                  (inventoryItem) =>
+                    normalizeArticleNumber(inventoryItem.articleNumber) ===
+                    normalizeArticleNumber(product.articleNum)
+                ) || null;
+            }
+
+            if (!linkedInventoryItem) {
+              throw new Error('Kein zugehöriger Lagerartikel gefunden');
+            }
+
+            setSelectedProduct(product);
+            setSelectedInventoryItem(linkedInventoryItem);
+          } catch (err) {
+            setError(
+              err instanceof Error
+                ? err.message
+                : 'Detaildaten konnten nicht geladen werden'
+            );
+          }
+        }}
         onEditProduct={(product) => console.log('Bearbeiten:', product)}
         onDeleteProduct={requestDelete}
+      />
+
+      <ProductDetailModal
+        productData={selectedProduct}
+        inventoryData={selectedInventoryItem}
+        onClose={() => {
+          setSelectedProduct(null);
+          setSelectedInventoryItem(null);
+        }}
       />
 
       {confirmId && (

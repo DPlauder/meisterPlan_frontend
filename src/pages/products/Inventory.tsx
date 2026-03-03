@@ -1,14 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { useInventoryDelete } from '../../hooks/inventory/useInventoryDelete';
 import { fetchInventoryItems } from '../../services/inventory/inventoryService';
+import {
+  fetchProductByArticleNum,
+  fetchProducts,
+} from '../../services/products/productsService';
 import type { item } from '../../types/item';
+import type { product } from '../../types/product';
 import InventoryList from '../../components/inventory/InventoryList';
+import ProductDetailModal from '../../components/products/ProductDetailModal';
 import ConfirmDialog from '../../components/ui/ConfirmDialog';
 
 export default function Inventory() {
   const [items, setItems] = useState<item[]>([]);
+  const [products, setProducts] = useState<product[]>([]);
+  const [selectedItem, setSelectedItem] = useState<item | null>(null);
+  const [selectedProduct, setSelectedProduct] = useState<product | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const normalizeArticleNumber = (value: string) => value.trim().toLowerCase();
 
   // Hook to handle inventory item deletion
   // It provides methods to request, confirm, and cancel deletion
@@ -26,9 +37,10 @@ export default function Inventory() {
     );
 
   useEffect(() => {
-    fetchInventoryItems()
-      .then((data) => {
-        setItems(data);
+    Promise.all([fetchInventoryItems(), fetchProducts()])
+      .then(([inventoryData, productsData]) => {
+        setItems(inventoryData);
+        setProducts(productsData);
         setLoading(false);
       })
       .catch((err) => {
@@ -45,8 +57,42 @@ export default function Inventory() {
       <InventoryList
         items={items}
         onAddItem={() => console.log('Neuen Artikel hinzufügen')}
+        onViewItem={async (item) => {
+          try {
+            const linkedProduct = await fetchProductByArticleNum(
+              item.articleNumber
+            );
+
+            setProducts((prevProducts) => {
+              const productExists = prevProducts.some(
+                (product) => product.id === linkedProduct.id
+              );
+
+              if (productExists) return prevProducts;
+              return [...prevProducts, linkedProduct];
+            });
+
+            setSelectedItem(item);
+            setSelectedProduct(linkedProduct);
+          } catch (err) {
+            setError(
+              err instanceof Error
+                ? err.message
+                : 'Detaildaten konnten nicht geladen werden'
+            );
+          }
+        }}
         onEditItem={(inv) => console.log('Bearbeiten:', inv)}
         onDeleteItem={requestDelete}
+      />
+
+      <ProductDetailModal
+        productData={selectedProduct}
+        inventoryData={selectedItem}
+        onClose={() => {
+          setSelectedItem(null);
+          setSelectedProduct(null);
+        }}
       />
 
       {confirmId && (

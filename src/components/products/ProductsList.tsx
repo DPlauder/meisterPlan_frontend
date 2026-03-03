@@ -4,6 +4,7 @@ import React, { useMemo, useState } from 'react';
 import {
   Search,
   Package,
+  Eye,
   Edit,
   Trash2,
   Euro,
@@ -21,6 +22,7 @@ type SortDirection = 'asc' | 'desc';
 
 interface ProductsListProps {
   products: product[];
+  onViewProduct?: (product: product) => void;
   onEditProduct?: (product: product) => void;
   onDeleteProduct?: (productId: string) => void;
   onAddProduct?: () => void;
@@ -28,6 +30,7 @@ interface ProductsListProps {
 
 export default function ProductsList({
   products,
+  onViewProduct,
   onEditProduct,
   onDeleteProduct,
   onAddProduct,
@@ -236,6 +239,14 @@ export default function ProductsList({
                 </td>
                 <td className="px-6 py-4 text-right">
                   <div className="flex justify-end gap-2">
+                    {onViewProduct && (
+                      <button
+                        onClick={() => onViewProduct(product)}
+                        title="Details"
+                      >
+                        <Eye className="w-4 h-4 text-gray-400 hover:text-gray-700" />
+                      </button>
+                    )}
                     {onEditProduct && (
                       <button
                         onClick={() => onEditProduct(product)}
